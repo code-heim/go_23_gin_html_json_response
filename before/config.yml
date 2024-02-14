@@ -1,0 +1,1 @@
+db: gin_blogs:tmp_pwd@tcp(127.0.0.1:3306)/gin_blogs?charset=utf8&parseTime=true

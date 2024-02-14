@@ -1,0 +1,21 @@
+server {
+    listen 90;
+    listen [::]:90;
+
+    location / {
+        # Check if the URL ends with .html or .json
+        # Capture the API without the extension/format in $filename
+        if ($request_uri ~ ^/(.+)\.(html|json)$) {
+            set $api $1;
+            set $extension $2;
+	}
+        # Rewrite the request URI without the extension
+        rewrite ^/(.+)\.(html|json)$ /$api break;
+        # Add a custom header with the original extension
+        proxy_set_header X-Original-Extension $extension;
+	proxy_pass http://localhost:8080; # Forward requests to Gin server on port 8080
+    }
+
+    # Additional configuration...
+}
+
